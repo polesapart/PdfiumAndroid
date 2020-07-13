@@ -19,7 +19,7 @@ ext {
 
     publishedGroupId = 'com.github.barteksc'
     libraryName = 'PdfiumAndroid'
-    artifact = 'pdfium-android'
+    artifact = 'PdfiumAndroid'
 
     libraryDescription = 'Fork of library for rendering PDFs on Android\'s Surface or Bitmap'
 
