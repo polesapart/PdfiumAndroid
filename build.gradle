@@ -2,6 +2,7 @@ buildscript {
     repositories {
         jcenter()
         google()
+        mavenCentral()
     }
 
     dependencies {
@@ -11,7 +12,22 @@ buildscript {
     }
 }
 
+
+plugins {
+    id "pl.allegro.tech.build.axion-release" version "1.12.0"
+}
+
+scmVersion {
+    tag {
+        prefix = 'pdfium-android'
+    }
+}
+project.version = scmVersion.version
+
 apply plugin: 'com.android.library'
+
+
+
 
 ext {
     bintrayRepo = 'maven'
@@ -26,7 +42,7 @@ ext {
     siteUrl = 'https://github.com/polesapart/PdfiumAndroid'
     gitUrl = 'https://github.com/polesapart/PdfiumAndroid.git'
 
-    libraryVersion = '1.9.0'
+    libraryVersion = project.version
 
     developerId = 'polesapart'
     developerName = 'Alexandre Nunes'
