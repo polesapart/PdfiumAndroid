@@ -61,6 +61,9 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.9.0"
+        ndk {
+            moduleName "jniPdfium"
+        }
     }
     buildTypes {
         release {
@@ -74,6 +77,23 @@ android {
             jni.srcDirs = []
             jniLibs.srcDir 'src/main/libs'
         }
+    }
+    task buildNative(type: Exec, description: 'JNI ndk') {
+        def ndkDir = android.ndkDirectory
+        commandLine "$ndkDir/ndk-build", '-C', file('src/main/jni').absolutePath,
+        '-j', Runtime.runtime.availableProcessors(),
+        'all',
+        'NDK_DEBUG=1'
+    }
+    task cleanNative(type: Exec, description: 'Clean JNI files') {
+        def ndkDir = android.ndkDirectory
+        commandLine "$ndkDir/ndk-build",
+                '-C', file('src/main/jni').absolutePath, // Change src/main/jni the relative path to your jni source
+                'clean'
+    }
+    clean.dependsOn 'cleanNative'
+    tasks.withType(JavaCompile) {
+        compileTask -> compileTask.dependsOn buildNative
     }
 }
 
